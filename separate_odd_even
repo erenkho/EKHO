@@ -1,0 +1,78 @@
+//Design and implement an algorithm to order an array of $n$ integers such that
+//eventually the even elements appear after the odd elements. The algorithm should run in $O(n)\;$ time and use $\;O(1)\;$space (in addition to the array itself).
+
+//The program should read its entire input into an array and then sort it in place.
+//Finally, it should print the resulting array and the number of comparison operations performed.
+
+#include <iostream>
+using namespace std;
+
+#define MAX_SIZE 100
+
+void swap(int* a, int* b)
+{
+    int t = *a;
+    *a = *b;
+    *b = t;
+}
+
+// Function for separating even and odd numbers
+void separate(int a[], int n, int& c)
+{
+    int i=0, j=(n-1);
+
+    while (i < j) {
+    
+        if (a[i] %2 == 0)
+        {   c++;                        
+            
+            if (a[j] %2 != 0)
+            {
+                c++;
+                swap(&a[i], &a[j]);
+                i++;
+                j--;
+            }
+            else {
+                j--;
+                c++;
+            }
+        }
+        else {
+            i++;
+            c++;
+        }
+    }
+}
+
+void printArray(int arr[], int size)
+{
+    int i;
+    
+    for (i = 0; i < size; i++) {
+           
+        cout << arr[i] << endl;        
+    }
+}
+
+
+int main(int argc, char* argv[])
+{
+    int arr[MAX_SIZE] = { 0 };
+    int i = 0, N = 0, counter = 0;
+
+    //Takes input until the termination of the program.
+    while (cin >> arr[i])
+    {
+        i++;
+        N++;
+    }
+    
+    separate(arr, N, counter);
+
+    printArray(arr, N);
+
+    cout << counter << " comparisons in total." << endl;
+
+    return 0;
+}
